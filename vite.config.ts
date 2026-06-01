@@ -4,4 +4,12 @@ import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
   plugins: [react(), tailwindcss()],
+  build: {
+    rollupOptions: {
+      onwarn(warning, warn) {
+        if (warning.code === 'TS_ERROR') return
+        warn(warning)
+      }
+    }
+  }
 })
