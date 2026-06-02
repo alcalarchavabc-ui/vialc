@@ -2,11 +2,7 @@ import VialcHero from './VialcHero'
 import VialcBrief from './VialcBrief'
 
 export default function App() {
-  const path = window.location.pathname
-  
-  if (path === '/brief') {
-    return <VialcBrief />
-  }
-  
+  const params = new URLSearchParams(window.location.search)
+  if (params.get('page') === 'brief') return <VialcBrief />
   return <VialcHero />
 }

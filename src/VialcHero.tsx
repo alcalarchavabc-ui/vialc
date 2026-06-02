@@ -288,7 +288,7 @@ export default function VialcHero() {
             <a key={l} href="#" className="nav-link">{l}</a>
           ))}
         </div>
-        <a href="/brief" style={{textDecoration:"none"}}><button className="cta-primary">Comenzar →</button></a>
+        <button className="cta-primary" onClick={() => window.location.href='/?page=brief'}>Comenzar →</button>
       </nav>
 
       {/* SIDE LABELS */}
