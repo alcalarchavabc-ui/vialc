@@ -1,4 +1,5 @@
 import VialcHero from './VialcHero'
+import VialcAbout from './VialcAbout'
 import VialcBrief from './VialcBrief'
 
 export default function App() {
