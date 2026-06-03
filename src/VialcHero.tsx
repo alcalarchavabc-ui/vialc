@@ -285,7 +285,7 @@ export default function VialcHero() {
         </div>
         <div style={{ display: "flex", gap: 40 }}>
           {["Trabajo", "Servicios", "Acerca", "Contacto"].map(l => (
-            <a key={l} href="#" className="nav-link">{l}</a>
+            <a key={l} href={l === "Acerca" ? "/?page=about" : "#"} className="nav-link">{l}</a>
           ))}
         </div>
         <button className="cta-primary" onClick={() => window.location.href='/?page=brief'}>Comenzar →</button>
