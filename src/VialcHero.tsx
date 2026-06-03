@@ -294,7 +294,7 @@ export default function VialcHero() {
       {/* SIDE LABELS */}
       <div style={{ position: "absolute", left: 24, top: "50%", transform: "translateY(-50%)", zIndex: 10, display: "flex", flexDirection: "column", alignItems: "center", gap: 16 }}>
         <div style={{ width: "0.5px", height: 48, background: "rgba(255,255,255,0.15)" }} />
-        <span className="side-label" style={{ transform: "rotate(180deg)" }}>Est. 2020 — MX</span>
+        <span className="side-label" style={{ transform: "rotate(180deg)" }}>GDL 2026 — MX</span>
       </div>
       <div style={{ position: "absolute", right: 24, top: "50%", transform: "translateY(-50%)", zIndex: 10, display: "flex", flexDirection: "column", alignItems: "center", gap: 16 }}>
         <span className="side-label">Scroll</span>
