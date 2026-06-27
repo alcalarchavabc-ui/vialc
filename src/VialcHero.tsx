@@ -356,7 +356,7 @@ export default function VialcHero() {
           transition: "opacity 0.9s ease 1.8s",
         }}>
           <button className="cta-primary">Ver Nuestro Trabajo →</button>
-          <button className="cta-secondary">Reservar una Llamada</button>
+          <button className="cta-secondary">Reservar una cita</button>
         </div>
 
         {/* Stats */}
