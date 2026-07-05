@@ -284,8 +284,8 @@ export default function VialcHero() {
           <span style={{ fontFamily: "'DM Mono', monospace", color: "#fff", fontSize: 16, letterSpacing: "0.1em" }}>VIALC</span>
         </div>
         <div style={{ display: "flex", gap: 40 }}>
-          {["Trabajo", "Servicios", "Acerca", "Contacto"].map(l => (
-            <a key={l} href={l === "Acerca" ? "/?page=about" : l === "Servicios" ? "/?page=services" : "#"} className="nav-link">{l}</a>
+          {["Trabajo", "Servicios", "Servicio Web", "Acerca", "Contacto"].map(l => (
+            <a key={l} href={l === "Acerca" ? "/?page=about" : l === "Servicios" ? "/?page=services" : l === "Servicio Web" ? "/?page=servicio-web" : "#"} className="nav-link">{l}</a>
           ))}
         </div>
         <button className="cta-primary" onClick={() => window.location.href='/?page=brief'}>Comenzar →</button>
