@@ -1,12 +1,14 @@
 import { useState, useEffect, useRef } from "react";
 
 function CinematicBackground() {
-  const canvasRef = useRef(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
+    if (!canvas) return;
     const ctx = canvas.getContext("2d");
-    let animId;
+    if (!ctx) return;
+    let animId: number;
 
     const resize = () => {
       canvas.width = window.innerWidth;
@@ -36,7 +38,7 @@ function CinematicBackground() {
       width: 0.6 + i * 0.1,
     }));
 
-    const render = (ts) => {
+    const render = (ts: number) => {
       const t = ts / 1000;
       const W = canvas.width;
       const H = canvas.height;
@@ -44,7 +46,6 @@ function CinematicBackground() {
       ctx.fillStyle = "#000";
       ctx.fillRect(0, 0, W, H);
 
-      // Silk / smoke blobs
       for (let i = 0; i < 6; i++) {
         const cx = W * (0.15 + i * 0.14 + Math.sin(t * 0.07 + i) * 0.07);
         const cy = H * (0.3 + Math.cos(t * 0.05 + i * 0.9) * 0.22);
@@ -60,7 +61,6 @@ function CinematicBackground() {
         ctx.fill();
       }
 
-      // Floating particles
       particles.forEach((p) => {
         p.x += p.vx; p.y += p.vy;
         if (p.x < 0) p.x = 1; if (p.x > 1) p.x = 0;
@@ -72,7 +72,6 @@ function CinematicBackground() {
         ctx.fill();
       });
 
-      // Anamorphic streaks
       streaks.forEach((s) => {
         const cx = ((t * s.speed + s.phase) % 1.6) - 0.3;
         const sy = s.y * H;
@@ -86,7 +85,6 @@ function CinematicBackground() {
         ctx.fillRect((cx - 0.15) * W, sy - 0.5, len, 1);
       });
 
-      // Film grain
       grains.forEach((g) => {
         ctx.fillStyle = `rgba(255,255,255,${g.a * (0.5 + Math.random() * 0.9)})`;
         ctx.fillRect(
@@ -96,14 +94,12 @@ function CinematicBackground() {
         );
       });
 
-      // Central glow
       const cg = ctx.createRadialGradient(W / 2, H / 2, 0, W / 2, H / 2, W * 0.38);
       cg.addColorStop(0, "rgba(255,255,255,0.045)");
       cg.addColorStop(1, "transparent");
       ctx.fillStyle = cg;
       ctx.fillRect(0, 0, W, H);
 
-      // Vignette
       const vig = ctx.createRadialGradient(W / 2, H / 2, H * 0.12, W / 2, H / 2, H * 0.85);
       vig.addColorStop(0, "transparent");
       vig.addColorStop(1, "rgba(0,0,0,0.88)");
@@ -138,6 +134,14 @@ export default function VialcHero() {
 
   const letters = ["V", "I", "A", "L", "C"];
 
+  const navLinks: { label: string; href: string }[] = [
+    { label: "Trabajo", href: "/?page=trabajo" },
+    { label: "Servicios", href: "/?page=services" },
+    { label: "Servicio Web", href: "/?page=servicio-web" },
+    { label: "Acerca", href: "/?page=about" },
+    { label: "Contacto", href: "#" },
+  ];
+
   return (
     <div style={{ position: "relative", minHeight: "100vh", background: "#000", overflow: "hidden", display: "flex", flexDirection: "column" }}>
       <style>{`
@@ -170,9 +174,7 @@ export default function VialcHero() {
           display: inline-block;
           text-shadow: 0 0 80px rgba(255,255,255,0.15);
         }
-        .letter.go {
-          animation: letterUp 0.9s cubic-bezier(.16,1,.3,1) forwards;
-        }
+        .letter.go { animation: letterUp 0.9s cubic-bezier(.16,1,.3,1) forwards; }
 
         .tagline {
           font-family: 'DM Mono', monospace;
@@ -182,18 +184,14 @@ export default function VialcHero() {
           text-transform: uppercase;
           opacity: 0;
         }
-        .tagline.go {
-          animation: fadeIn 1.2s ease forwards;
-        }
+        .tagline.go { animation: fadeIn 1.2s ease forwards; }
 
         .deco-line {
           height: 0.5px;
           background: rgba(255,255,255,0.18);
           width: 0;
         }
-        .deco-line.go {
-          animation: lineGrow 1s cubic-bezier(.16,1,.3,1) forwards;
-        }
+        .deco-line.go { animation: lineGrow 1s cubic-bezier(.16,1,.3,1) forwards; }
 
         .nav-link {
           font-family: 'DM Mono', monospace;
@@ -284,17 +282,19 @@ export default function VialcHero() {
           <span style={{ fontFamily: "'DM Mono', monospace", color: "#fff", fontSize: 16, letterSpacing: "0.1em" }}>VIALC</span>
         </div>
         <div style={{ display: "flex", gap: 40 }}>
-          {["Trabajo", "Servicios", "Servicio Web", "Acerca", "Contacto"].map(l => (
-            <a key={l} href={l === "Acerca" ? "/?page=about" : l === "Servicios" ? "/?page=services" : l === "Servicio Web" ? "/?page=servicio-web" : "#"} className="nav-link">{l}</a>
+          {navLinks.map(({ label, href }) => (
+            <a key={label} href={href} className="nav-link">{label}</a>
           ))}
         </div>
-        <button className="cta-primary" onClick={() => window.location.href='/?page=brief'}>Comenzar →</button>
+        <a href="/?page=brief" style={{ textDecoration: "none" }}>
+          <button className="cta-primary">Comenzar →</button>
+        </a>
       </nav>
 
       {/* SIDE LABELS */}
       <div style={{ position: "absolute", left: 24, top: "50%", transform: "translateY(-50%)", zIndex: 10, display: "flex", flexDirection: "column", alignItems: "center", gap: 16 }}>
         <div style={{ width: "0.5px", height: 48, background: "rgba(255,255,255,0.15)" }} />
-        <span className="side-label" style={{ transform: "rotate(180deg)" }}>GDL 2026 — MX</span>
+        <span className="side-label" style={{ transform: "rotate(180deg)" }}>Est. 2020 — MX</span>
       </div>
       <div style={{ position: "absolute", right: 24, top: "50%", transform: "translateY(-50%)", zIndex: 10, display: "flex", flexDirection: "column", alignItems: "center", gap: 16 }}>
         <span className="side-label">Scroll</span>
@@ -310,7 +310,6 @@ export default function VialcHero() {
         padding: "0 24px",
         gap: 0,
       }}>
-        {/* Badge */}
         <div style={{
           display: "flex", alignItems: "center", gap: 10,
           border: "0.5px solid rgba(255,255,255,0.14)",
@@ -325,54 +324,44 @@ export default function VialcHero() {
           </span>
         </div>
 
-        {/* Deco line top */}
         <div className={`deco-line ${visible ? "go" : ""}`} style={{ animationDelay: "0.4s", marginBottom: 32 }} />
 
-        {/* LETTERS */}
         <div style={{ display: "flex", gap: "clamp(4px, 1vw, 12px)", marginBottom: 32 }}>
           {letters.map((l, i) => (
-            <span
-              key={l}
-              className={`letter ${visible ? "go" : ""}`}
-              style={{ animationDelay: `${0.5 + i * 0.13}s` }}
-            >
+            <span key={l} className={`letter ${visible ? "go" : ""}`} style={{ animationDelay: `${0.5 + i * 0.13}s` }}>
               {l}
             </span>
           ))}
         </div>
 
-        {/* Deco line bottom */}
         <div className={`deco-line ${visible ? "go" : ""}`} style={{ animationDelay: "1.3s", marginBottom: 24 }} />
 
-        {/* Tagline */}
         <p className={`tagline ${visible ? "go" : ""}`} style={{ animationDelay: "1.5s", marginBottom: 48 }}>
           Marketing de Alto Nivel
         </p>
 
-        {/* CTAs */}
         <div style={{
           display: "flex", gap: 16, flexWrap: "wrap", justifyContent: "center",
           opacity: visible ? 1 : 0,
           transition: "opacity 0.9s ease 1.8s",
         }}>
           <button className="cta-primary">Ver Nuestro Trabajo →</button>
-          <button className="cta-secondary">Reservar una cita</button>
+          <button className="cta-secondary">Reservar una Cita</button>
         </div>
 
-        {/* Stats */}
         <div style={{
           display: "flex", gap: 64, marginTop: 72, flexWrap: "wrap", justifyContent: "center",
           opacity: visible ? 1 : 0,
           transition: "opacity 1s ease 2.2s",
         }}>
           {[
-           { num: "Estrategia", label: "" },
-{ num: "Contenido", label: "" },
-{ num: "Resultados", label: "" },
+            { num: "Estrategia", label: "" },
+            { num: "Contenido", label: "" },
+            { num: "Resultados", label: "" },
           ].map((s, i) => (
             <div key={i} style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
               <span className="stat-num">{s.num}</span>
-              <span className="stat-label">{s.label}</span>
+              {s.label && <span className="stat-label">{s.label}</span>}
             </div>
           ))}
         </div>
