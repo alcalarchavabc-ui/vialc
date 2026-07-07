@@ -218,32 +218,7 @@ export default function VialcServicioWeb() {
         background: "radial-gradient(ellipse at 50% 0%, rgba(255,255,255,0.05), transparent 60%)",
       }} />
 
-      {/* NAV */}
-      <nav style={{
-        position: "relative", zIndex: 10,
-        display: "flex", alignItems: "center", justifyContent: "space-between",
-        padding: "32px 48px",
-        opacity: visible ? 1 : 0,
-        transition: "opacity 1s ease 0.1s",
-      }}>
-        <a href="/" style={{ display: "flex", alignItems: "center", gap: 12, textDecoration: "none" }}>
-          <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-            <rect x="0" y="0" width="10" height="10" fill="white" />
-            <rect x="12" y="0" width="10" height="10" fill="white" opacity="0.3" />
-            <rect x="0" y="12" width="10" height="10" fill="white" opacity="0.3" />
-            <rect x="12" y="12" width="10" height="10" fill="white" />
-          </svg>
-          <span style={{ fontFamily: "'DM Mono', monospace", color: "#fff", fontSize: 16, letterSpacing: "0.1em" }}>VIALC</span>
-        </a>
-        <div style={{ display: "flex", gap: 40 }}>
-          <a href="#" className="nav-link">Trabajo</a>
-          <a href="/?page=services" className="nav-link">Servicios</a>
-          <a href="/?page=servicio-web" className="nav-link" style={{ color: "rgba(255,255,255,0.85)" }}>Servicio Web</a>
-          <a href="/?page=about" className="nav-link">Acerca</a>
-          <a href="#" className="nav-link">Contacto</a>
-        </div>
-        <button className="cta-primary" onClick={() => window.location.href = "/?page=brief"}>Comenzar →</button>
-      </nav>
+      
 
       {/* HEADER */}
       <header style={{
