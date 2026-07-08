@@ -219,7 +219,9 @@ export default function VialcServicioWeb() {
       }} />
 
       
-
+<button onClick={() => window.history.back()} style={{ background: "transparent", border: "none", color: "rgba(255,255,255,0.4)", fontFamily: "'DM Mono', monospace", fontSize: 11, letterSpacing: "0.2em", textTransform: "uppercase" as const, cursor: "pointer", marginBottom: 32, display: "flex", alignItems: "center", gap: 8, position: "relative", zIndex: 10 }}>
+  ← Regresar
+</button>
       {/* HEADER */}
       <header style={{
         position: "relative", zIndex: 10,
