@@ -1,4 +1,4 @@
-<navexport default function VialcPoliticas() {
+export default function VialcPoliticas() {
   const sections = [
     {
       cat: "Forma de pago",
