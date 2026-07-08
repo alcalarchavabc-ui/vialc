@@ -4,6 +4,7 @@ import VialcBrief from './VialcBrief'
 import VialcServices from './VialcServices'
 import VialcServicioWeb from './VialcServicioWeb'
 import VialcTrabajo from './VialcTrabajo'
+import VialcPoliticas from './VialcPoliticas'
 
 export default function App() {
   const params = new URLSearchParams(window.location.search)
@@ -12,5 +13,6 @@ export default function App() {
   if (params.get('page') === 'services') return <VialcServices />
   if (params.get('page') === 'servicio-web') return <VialcServicioWeb />
   if (params.get('page') === 'trabajo') return <VialcTrabajo />
+  if (params.get('page') === 'politicas') return <VialcPoliticas />
   return <VialcHero />
 }
