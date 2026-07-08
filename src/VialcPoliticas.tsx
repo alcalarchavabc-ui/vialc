@@ -1,4 +1,4 @@
-export default function VialcPoliticas() {
+<navexport default function VialcPoliticas() {
   const sections = [
     {
       cat: "Forma de pago",
@@ -68,25 +68,7 @@ export default function VialcPoliticas() {
         @media(max-width:700px){ .pol-section{ grid-template-columns:1fr; gap:16px 0; } }
       `}</style>
 
-      {/* NAV */}
-      <nav style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 64 }}>
-        <a href="/" style={{ display: "flex", alignItems: "center", gap: 12, textDecoration: "none" }}>
-          <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-            <rect x="0" y="0" width="10" height="10" fill="white" />
-            <rect x="12" y="0" width="10" height="10" fill="white" opacity="0.3" />
-            <rect x="0" y="12" width="10" height="10" fill="white" opacity="0.3" />
-            <rect x="12" y="12" width="10" height="10" fill="white" />
-          </svg>
-          <span style={{ fontFamily: "'DM Mono', monospace", color: "#fff", fontSize: 16, letterSpacing: "0.1em" }}>VIALC</span>
-        </a>
-        <div style={{ display: "flex", gap: 32 }}>
-          <a href="/?page=trabajo" className="nav-link-p">Trabajo</a>
-          <a href="/?page=services" className="nav-link-p">Servicios</a>
-          <a href="/?page=servicio-web" className="nav-link-p">Servicio Web</a>
-          <a href="/?page=about" className="nav-link-p">Acerca</a>
-        </div>
-        <button className="cta-p" onClick={() => window.location.href = "/?page=brief"}>Comenzar →</button>
-      </nav>
+      
 
       {/* BADGE */}
       <div style={{ display: "inline-flex", alignItems: "center", gap: 8, border: "0.5px solid rgba(255,255,255,0.14)", padding: "7px 18px", marginBottom: 44 }}>
