@@ -140,6 +140,7 @@ export default function VialcHero() {
     { label: "Servicio Web", href: "/?page=servicio-web" },
     { label: "Acerca", href: "/?page=about" },
     { label: "Contacto", href: "#" },
+    { label: "Políticas", href: "/?page=politicas" },
   ];
 
   return (
