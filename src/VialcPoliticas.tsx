@@ -71,6 +71,11 @@ export default function VialcPoliticas() {
       
 
       {/* BADGE */}
+      <button onClick={() => window.history.back()} style={{ background: "transparent", border: "none", color: "rgba(255,255,255,0.4)", fontFamily: "'DM Mono', monospace", fontSize: 11, letterSpacing: "0.2em", textTransform: "uppercase" as const, cursor: "pointer", marginBottom: 32, display: "flex", alignItems: "center", gap: 8 }}>
+  ← Regresar
+</button>
+
+{/* BADGE */}
       <div style={{ display: "inline-flex", alignItems: "center", gap: 8, border: "0.5px solid rgba(255,255,255,0.14)", padding: "7px 18px", marginBottom: 44 }}>
         <span style={{ fontSize: 9, letterSpacing: "0.25em", textTransform: "uppercase" as const, color: "rgba(255,255,255,0.4)" }}>Nuestras políticas</span>
       </div>
