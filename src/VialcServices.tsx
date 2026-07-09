@@ -1,130 +1,153 @@
+import { useState, useEffect } from "react";
+
 export default function VialcServices() {
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const t = setTimeout(() => setVisible(true), 150);
+    return () => clearTimeout(t);
+  }, []);
+
+  const rows = [
+    { label: "Publicaciones al mes", impulso: "12", dominio: "20", imperio: "30" },
+    { label: "Reels / TikToks", impulso: "4", dominio: "8", imperio: "12" },
+    { label: "Diseño gráfico", impulso: true, dominio: true, imperio: true },
+    { label: "Gestión de Facebook", impulso: true, dominio: true, imperio: true },
+    { label: "Gestión de Instagram", impulso: true, dominio: true, imperio: true },
+    { label: "Gestión de TikTok", impulso: false, dominio: true, imperio: true },
+    { label: "Respuesta a mensajes", impulso: "Básica", dominio: "Intermedia", imperio: "Completa" },
+    { label: "Meta Ads", impulso: false, dominio: true, imperio: true },
+    { label: "Landing Page", impulso: false, dominio: true, imperio: true },
+    { label: "Página Web Completa", impulso: false, dominio: false, imperio: true },
+    { label: "Branding Premium", impulso: false, dominio: false, imperio: true },
+    { label: "SEO Básico", impulso: false, dominio: false, imperio: true },
+    { label: "Reporte mensual", impulso: true, dominio: true, imperio: true },
+    { label: "Reunión estratégica", impulso: false, dominio: "1 mensual", imperio: "2 mensuales" },
+  ];
+
+  const renderCell = (val: boolean | string, featured = false) => {
+    if (val === true) return <span style={{ color: featured ? "#fff" : "rgba(255,255,255,0.55)", fontSize: 14 }}>✓</span>;
+    if (val === false) return <span style={{ color: "rgba(255,255,255,0.15)", fontSize: 14 }}>✕</span>;
+    return <span>{val}</span>;
+  };
+
   return (
-    <div style={{ background: "#000", minHeight: "100vh", padding: "80px 40px", fontFamily: "'DM Mono', monospace", boxSizing: "border-box" }}>
+    <div style={{ background: "#000", minHeight: "100vh", padding: "48px", fontFamily: "'DM Mono', monospace", color: "#fff", boxSizing: "border-box" }}>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=DM+Mono:wght@300;400&display=swap');
         * { box-sizing: border-box; }
-        .srv-grid {
-          display: grid;
-          grid-template-columns: 1fr 1fr 1fr;
-          border: 0.5px solid rgba(255,255,255,0.12);
-        }
-        @media (max-width: 768px) {
-          .srv-grid { grid-template-columns: 1fr; }
-          .srv-card { border-right: none !important; border-bottom: 0.5px solid rgba(255,255,255,0.12); }
-        }
-        .srv-card {
-          background: #000;
-          padding: 48px 36px;
-          display: flex;
-          flex-direction: column;
-          border-right: 0.5px solid rgba(255,255,255,0.12);
-          transition: background 0.3s;
-        }
-        .srv-card:last-child { border-right: none; }
-        .srv-card:hover { background: rgba(255,255,255,0.02); }
-        .srv-card.featured { background: rgba(255,255,255,0.04); }
-        .srv-list { list-style: none; flex: 1; margin-bottom: 40px; padding: 0; }
-        .srv-list li {
-          font-size: 11px;
-          color: rgba(255,255,255,0.45);
-          letter-spacing: 0.04em;
-          padding: 9px 0;
-          border-bottom: 0.5px solid rgba(255,255,255,0.05);
-          display: flex;
-          align-items: center;
-          gap: 10px;
-          line-height: 1.4;
-        }
-        .srv-list li::before {
-          content: '';
-          width: 3px; height: 3px;
-          border-radius: 50%;
-          background: rgba(255,255,255,0.2);
-          flex-shrink: 0;
-        }
-        .featured .srv-list li { color: rgba(255,255,255,0.6); }
-        .featured .srv-list li::before { background: rgba(255,255,255,0.45); }
-        .srv-btn {
-          width: 100%;
-          background: transparent;
-          border: 0.5px solid rgba(255,255,255,0.18);
-          color: rgba(255,255,255,0.45);
+        @keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+        @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+        @keyframes lineGrow { from{width:0} to{width:100%} }
+        .a1 { animation: fadeUp 0.8s cubic-bezier(.16,1,.3,1) 0.1s both; }
+        .a2 { animation: fadeUp 0.8s cubic-bezier(.16,1,.3,1) 0.3s both; }
+        .a3 { animation: fadeUp 0.8s cubic-bezier(.16,1,.3,1) 0.5s both; }
+        .a4 { animation: fadeIn 1s ease 0.7s both; }
+        .back-btn {
+          display: inline-flex; align-items: center; gap: 8px;
+          background: transparent; border: none;
+          color: rgba(255,255,255,0.35);
           font-family: 'DM Mono', monospace;
-          font-size: 10px;
-          letter-spacing: 0.2em;
-          text-transform: uppercase;
-          padding: 14px;
-          cursor: pointer;
-          transition: all 0.2s;
+          font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+          cursor: pointer; margin-bottom: 40px; padding: 0;
+          transition: color 0.2s;
         }
-        .srv-btn:hover { border-color: rgba(255,255,255,0.5); color: rgba(255,255,255,0.9); }
-        .srv-btn-hot { background: #fff !important; color: #000 !important; border-color: #fff !important; }
-        .srv-btn-hot:hover { background: rgba(255,255,255,0.88) !important; }
+        .back-btn:hover { color: rgba(255,255,255,0.7); }
+        .srv-table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+        .srv-table th {
+          font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+          color: rgba(255,255,255,0.35); padding: 16px 20px; text-align: center;
+          border-bottom: 0.5px solid rgba(255,255,255,0.12);
+        }
+        .srv-table th:first-child { text-align: left; color: rgba(255,255,255,0.2); width: 36%; }
+        .srv-table th.feat { color: #fff; border-bottom: 0.5px solid rgba(255,255,255,0.45); }
+        .srv-table td {
+          padding: 13px 20px; font-size: 11px; color: rgba(255,255,255,0.4);
+          border-bottom: 0.5px solid rgba(255,255,255,0.05);
+          text-align: center; letter-spacing: 0.04em;
+        }
+        .srv-table td:first-child { text-align: left; color: rgba(255,255,255,0.5); }
+        .srv-table td.feat { background: rgba(255,255,255,0.03); color: rgba(255,255,255,0.65); }
+        .srv-table tr:hover td { background: rgba(255,255,255,0.02); }
+        .srv-table tr:hover td.feat { background: rgba(255,255,255,0.05); }
+        .cta-btn {
+          font-family: 'DM Mono', monospace; font-size: 11px;
+          letter-spacing: 0.2em; text-transform: uppercase;
+          color: #000; background: #fff; border: none;
+          padding: 16px 40px; cursor: pointer; transition: background 0.2s;
+        }
+        .cta-btn:hover { background: rgba(255,255,255,0.88); }
       `}</style>
 
-      {/* Label */}
-      <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 48 }}>
-        <div style={{ width: 32, height: "0.5px", background: "rgba(255,255,255,0.3)" }} />
-        <span style={{ fontSize: 10, letterSpacing: "0.3em", color: "rgba(255,255,255,0.4)", textTransform: "uppercase" as const }}>Servicios VIALC</span>
+      {/* BACK BUTTON */}
+      <button className={`back-btn ${visible ? "a1" : ""}`} onClick={() => window.history.back()}>
+        ← Regresar
+      </button>
+
+      {/* BADGE */}
+      <div className={visible ? "a1" : ""} style={{ display: "inline-flex", alignItems: "center", gap: 8, border: "0.5px solid rgba(255,255,255,0.14)", padding: "7px 18px", marginBottom: 32, marginLeft: 0 }}>
+        <span style={{ fontSize: 9, letterSpacing: "0.25em", textTransform: "uppercase" as const, color: "rgba(255,255,255,0.4)" }}>Paquetes de marketing</span>
       </div>
 
-      {/* Title */}
-      <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 300, fontSize: "clamp(36px, 5vw, 64px)", color: "#fff", lineHeight: 1.1, marginBottom: 12 }}>
-        Elige tu<br /><em style={{ fontStyle: "italic", color: "rgba(255,255,255,0.6)" }}>paquete ideal.</em>
+      {/* TITLE */}
+      <h1 className={visible ? "a2" : ""} style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 300, fontSize: "clamp(36px,5vw,56px)", lineHeight: 1.1, marginBottom: 8 }}>
+        Elige tu plan <em style={{ fontStyle: "italic", color: "rgba(255,255,255,0.6)" }}>ideal.</em>
       </h1>
-      <p style={{ fontSize: 12, color: "rgba(255,255,255,0.35)", letterSpacing: "0.06em", marginBottom: 64, lineHeight: 1.8, maxWidth: 480 }}>
-        Soluciones diseñadas para cada etapa de tu negocio.
+      <p className={visible ? "a2" : ""} style={{ fontSize: 11, color: "rgba(255,255,255,0.35)", letterSpacing: "0.06em", marginBottom: 40, lineHeight: 1.8 }}>
+        Comparativa completa de paquetes · VIALC Marketing
       </p>
 
-      {/* Cards */}
-      <div className="srv-grid">
+      {/* DIVIDER */}
+      <div style={{ height: "0.5px", background: "rgba(255,255,255,0.12)", marginBottom: 40, animation: visible ? "lineGrow 1s cubic-bezier(.16,1,.3,1) 0.4s both" : "none" }} />
 
-        {/* IMPULSO */}
-        <div className="srv-card">
-          <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 52, fontWeight: 300, color: "rgba(255,255,255,0.06)", lineHeight: 1, marginBottom: 20 }}>01</div>
-          <span style={{ fontSize: 9, letterSpacing: "0.2em", textTransform: "uppercase" as const, padding: "4px 10px", border: "0.5px solid rgba(255,255,255,0.15)", color: "rgba(255,255,255,0.35)", marginBottom: 14, width: "fit-content" }}>Básico</span>
-          <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 300, fontSize: 32, color: "#fff", marginBottom: 6 }}>Impulso</h2>
-          <p style={{ fontSize: 11, color: "rgba(255,255,255,0.3)", letterSpacing: "0.05em", marginBottom: 28, lineHeight: 1.6 }}>Manejo básico de redes sociales.</p>
-          <div style={{ height: "0.5px", background: "rgba(255,255,255,0.1)", marginBottom: 24 }} />
-          <ul className="srv-list">
-            {["Diseño de publicaciones", "8–12 posts al mes", "Historias", "Calendario de contenido", "Optimización de perfil", "Reporte mensual"].map(f => <li key={f}>{f}</li>)}
-          </ul>
-          <div style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 300, fontSize: 40, color: "#fff", lineHeight: 1, marginBottom: 4 }}>$3,999</div>
-          <div style={{ fontSize: 10, color: "rgba(255,255,255,0.2)", letterSpacing: "0.15em", textTransform: "uppercase" as const, marginBottom: 20 }}>MXN / mes</div>
-          <button className="srv-btn" onClick={() => window.location.href='/?page=brief'}>Comenzar →</button>
-        </div>
+      {/* TABLE */}
+      <div className={visible ? "a4" : ""}>
+        <table className="srv-table">
+          <thead>
+            <tr>
+              <th>Servicio</th>
+              <th>Impulso</th>
+              <th className="feat">Dominio</th>
+              <th>Imperio</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((row) => (
+              <tr key={row.label}>
+                <td>{row.label}</td>
+                <td>{renderCell(row.impulso)}</td>
+                <td className="feat">{renderCell(row.dominio, true)}</td>
+                <td>{renderCell(row.imperio)}</td>
+              </tr>
+            ))}
+            <tr>
+              <td style={{ borderTop: "0.5px solid rgba(255,255,255,0.12)", borderBottom: "none", padding: "28px 20px" }}></td>
+              <td style={{ borderTop: "0.5px solid rgba(255,255,255,0.12)", borderBottom: "none", padding: "28px 20px" }}>
+                <div style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 300, fontSize: 28, color: "#fff", lineHeight: 1 }}>$4,990</div>
+                <div style={{ fontSize: 9, letterSpacing: "0.15em", color: "rgba(255,255,255,0.22)", textTransform: "uppercase" as const, marginTop: 6 }}>MXN / mes</div>
+              </td>
+              <td className="feat" style={{ borderTop: "0.5px solid rgba(255,255,255,0.12)", borderBottom: "none", padding: "28px 20px" }}>
+                <div style={{ display: "inline-block", fontSize: 9, letterSpacing: "0.12em", textTransform: "uppercase" as const, color: "#000", background: "#fff", padding: "4px 10px", marginBottom: 14 }}>Más elegido</div>
+                <div style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 300, fontSize: 34, color: "#fff", lineHeight: 1 }}>$8,990</div>
+                <div style={{ fontSize: 9, letterSpacing: "0.15em", color: "rgba(255,255,255,0.22)", textTransform: "uppercase" as const, marginTop: 6 }}>MXN / mes</div>
+              </td>
+              <td style={{ borderTop: "0.5px solid rgba(255,255,255,0.12)", borderBottom: "none", padding: "28px 20px" }}>
+                <div style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 300, fontSize: 28, color: "#fff", lineHeight: 1 }}>$14,990</div>
+                <div style={{ fontSize: 9, letterSpacing: "0.15em", color: "rgba(255,255,255,0.22)", textTransform: "uppercase" as const, marginTop: 6 }}>MXN / mes</div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
-        {/* CRECIMIENTO */}
-        <div className="srv-card featured">
-          <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 52, fontWeight: 300, color: "rgba(255,255,255,0.06)", lineHeight: 1, marginBottom: 20 }}>02</div>
-          <span style={{ fontSize: 9, letterSpacing: "0.2em", textTransform: "uppercase" as const, padding: "4px 10px", border: "0.5px solid rgba(255,255,255,0.45)", color: "rgba(255,255,255,0.75)", marginBottom: 14, width: "fit-content" }}>★ Más popular</span>
-          <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 300, fontSize: 32, color: "#fff", marginBottom: 6 }}>Crecimiento</h2>
-          <p style={{ fontSize: 11, color: "rgba(255,255,255,0.3)", letterSpacing: "0.05em", marginBottom: 28, lineHeight: 1.6 }}>Estrategia de contenido profesional.</p>
-          <div style={{ height: "0.5px", background: "rgba(255,255,255,0.1)", marginBottom: 24 }} />
-          <ul className="srv-list">
-            {["Reels profesionales", "Edición dinámica", "Community management", "Publicaciones constantes", "Investigación de tendencias", "Campañas básicas de anuncios", "Reportes y métricas"].map(f => <li key={f}>{f}</li>)}
-          </ul>
-          <div style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 300, fontSize: 40, color: "#fff", lineHeight: 1, marginBottom: 4 }}>$4,999</div>
-          <div style={{ fontSize: 10, color: "rgba(255,255,255,0.2)", letterSpacing: "0.15em", textTransform: "uppercase" as const, marginBottom: 20 }}>MXN / mes</div>
-          <button className="srv-btn srv-btn-hot" onClick={() => window.location.href='/?page=brief'}>Comenzar →</button>
-        </div>
+      {/* CTA */}
+      <div className={visible ? "a3" : ""} style={{ textAlign: "center" as const, marginTop: 56 }}>
+        <button className="cta-btn" onClick={() => window.location.href = "/?page=brief"}>Comenzar ahora →</button>
+      </div>
 
-        {/* DOMINIO */}
-        <div className="srv-card">
-          <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 52, fontWeight: 300, color: "rgba(255,255,255,0.06)", lineHeight: 1, marginBottom: 20 }}>03</div>
-          <span style={{ fontSize: 9, letterSpacing: "0.2em", textTransform: "uppercase" as const, padding: "4px 10px", border: "0.5px solid rgba(255,255,255,0.15)", color: "rgba(255,255,255,0.35)", marginBottom: 14, width: "fit-content" }}>Premium</span>
-          <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 300, fontSize: 32, color: "#fff", marginBottom: 6 }}>Dominio</h2>
-          <p style={{ fontSize: 11, color: "rgba(255,255,255,0.3)", letterSpacing: "0.05em", marginBottom: 28, lineHeight: 1.6 }}>Estrategia completa de branding y ventas.</p>
-          <div style={{ height: "0.5px", background: "rgba(255,255,255,0.1)", marginBottom: 24 }} />
-          <ul className="srv-list">
-            {["Producción profesional de contenido", "Reels de alto impacto", "Gestión completa de redes", "Meta Ads avanzados", "Embudos de venta", "Automatizaciones", "Seguimiento de leads", "Análisis competitivo", "Consultoría estratégica"].map(f => <li key={f}>{f}</li>)}
-          </ul>
-          <div style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 300, fontSize: 40, color: "#fff", lineHeight: 1, marginBottom: 4 }}>$5,999</div>
-          <div style={{ fontSize: 10, color: "rgba(255,255,255,0.2)", letterSpacing: "0.15em", textTransform: "uppercase" as const, marginBottom: 20 }}>MXN / mes</div>
-          <button className="srv-btn" onClick={() => window.location.href='/?page=brief'}>Comenzar →</button>
-        </div>
-
+      {/* FOOTER */}
+      <div style={{ textAlign: "center" as const, marginTop: 48, fontSize: 10, letterSpacing: "0.35em", color: "rgba(255,255,255,0.12)", textTransform: "uppercase" as const }}>
+        Guadalajara · México 2026
       </div>
     </div>
   );
